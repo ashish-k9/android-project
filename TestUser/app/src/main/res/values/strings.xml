@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TestUser</string>
+    <string name="action_settings">Settings</string>
+    <string name="start_navigation">Start Navigation</string>
+    <string name="thumb_desc">Thumbnail for user</string>
+    <string name="image_desc">Image for user</string>
+    <string name="Call">Call</string>
+    <string name="user_id_hint">Enter User ID</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="permission_call">Call permissions are need to call user</string>
+</resources>
