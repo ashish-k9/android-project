@@ -19,6 +19,45 @@ public class UserModel {
     String username;
     String phone;
     UserImageDetail userImageDetail;
+    String website;
+    String email;
+    Address address;
+    Company company;
+
+    public static UserModel getUserModelFromJSon(JSONObject jsonObject) {
+        if (jsonObject != null) {
+            UserModel userModel = new UserModel();
+            userModel.setEmail(JSONUtil.readString(jsonObject, "email"));
+            userModel.setId(JSONUtil.readInt(jsonObject, "id"));
+            userModel.setName(JSONUtil.readString(jsonObject, "name"));
+            userModel.setUsername(JSONUtil.readString(jsonObject, "username"));
+            userModel.setPhone(JSONUtil.readString(jsonObject, "phone"));
+            userModel.setWebsite(JSONUtil.readString(jsonObject, "website"));
+            userModel.setAddress(Address.getAddressFromJson(JSONUtil.getJsonObject(jsonObject, "address")));
+            userModel.setCompany(Company.getCompanyFromJson(JSONUtil.getJsonObject(jsonObject, "company")));
+            return userModel;
+        }
+
+        return null;
+    }
+
+    public static List<UserModel> getUserListFromJson(JSONObject jsonObject) {
+        if (jsonObject != null) {
+            JSONArray jsonArray = JSONUtil.getJsonArray(jsonObject, "results");
+            List<UserModel> list = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject object = JSONUtil.getJsonObjectFromArray(jsonArray, i);
+                UserModel userModel = UserModel.getUserModelFromJSon(object);
+                if (userModel != null)
+                    list.add(userModel);
+            }
+
+            return list;
+        }
+
+        return null;
+    }
 
     public UserImageDetail getUserImageDetail() {
         return userImageDetail;
@@ -43,8 +82,6 @@ public class UserModel {
     public void setWebsite(String website) {
         this.website = website;
     }
-
-    String website;
 
     public int getId() {
         return id;
@@ -78,11 +115,6 @@ public class UserModel {
         this.email = email;
     }
 
-    String email;
-
-    Address address;
-    Company company;
-
     public Company getCompany() {
         return company;
     }
@@ -98,46 +130,6 @@ public class UserModel {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-    public static UserModel getUserModelFromJSon(JSONObject jsonObject){
-        if(jsonObject != null){
-            UserModel userModel = new UserModel();
-            userModel.setEmail(JSONUtil.readString(jsonObject,"email"));
-            userModel.setId(JSONUtil.readInt(jsonObject,"id"));
-            userModel.setName(JSONUtil.readString(jsonObject,"name"));
-            userModel.setUsername(JSONUtil.readString(jsonObject,"username"));
-            userModel.setPhone(JSONUtil.readString(jsonObject,"phone"));
-            userModel.setWebsite(JSONUtil.readString(jsonObject,"website"));
-            userModel.setAddress(Address.getAddressFromJson(JSONUtil.getJsonObject(jsonObject,"address")));
-            userModel.setCompany(Company.getCompanyFromJson(JSONUtil.getJsonObject(jsonObject,"company")));
-            return  userModel;
-        }
-
-        return  null;
-    }
-
-    public static List<UserModel> getUserListFromJson(JSONObject jsonObject){
-        if(jsonObject != null){
-            JSONArray jsonArray = JSONUtil.getJsonArray(jsonObject,"results");
-        List<UserModel> list = new ArrayList<>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                JSONObject  object = JSONUtil.getJsonObjectFromArray(jsonArray,i);
-                UserModel userModel = UserModel.getUserModelFromJSon(object);
-                if (userModel != null)
-                list.add(userModel);
-            }
-
-            return list;
-        }
-
-        return null;
-    }
-
-
-
-
-
 
 
 }

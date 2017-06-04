@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-
 import java.util.HashSet;
 
 
@@ -15,9 +14,9 @@ import java.util.HashSet;
  *
  * @author Ashish
  */
-public class ApplicationCache  {
+public class ApplicationCache {
 
-    private static  final String PREF_NAME = "TestUSerCAche";
+    private static final String PREF_NAME = "TestUSerCAche";
 
     /**
      * Context representation
@@ -34,7 +33,6 @@ public class ApplicationCache  {
      * Preferences editor holding the key value pair
      */
     private Editor editor;
-
 
 
     /**
@@ -65,8 +63,6 @@ public class ApplicationCache  {
             editor = preferences.edit();
         }
     }
-
-
 
 
     /**
@@ -200,8 +196,6 @@ public class ApplicationCache  {
         editor.clear();
         editor.commit();
     }
-
-
 
 
     public void clearCacheData() {

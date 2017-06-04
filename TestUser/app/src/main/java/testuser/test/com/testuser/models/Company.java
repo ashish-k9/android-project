@@ -10,7 +10,20 @@ import testuser.test.com.testuser.utils.JSONUtil;
  */
 
 public class Company {
-    String name,catchPhrase,bs;
+    String name, catchPhrase, bs;
+
+    public static Company getCompanyFromJson(JSONObject jsonObject) {
+        if (jsonObject != null) {
+
+            Company company = new Company();
+            company.setBs(JSONUtil.readString(jsonObject, "bs"));
+            company.setCatchPhrase(JSONUtil.readString(jsonObject, "catchPhrase"));
+            company.setName(JSONUtil.readString(jsonObject, "name"));
+            return company;
+        }
+        return null;
+
+    }
 
     public String getName() {
         return name;
@@ -34,19 +47,6 @@ public class Company {
 
     public void setBs(String bs) {
         this.bs = bs;
-    }
-
-    public static  Company getCompanyFromJson(JSONObject jsonObject){
-        if(jsonObject!=null){
-
-            Company company = new Company();
-            company.setBs(JSONUtil.readString(jsonObject,"bs"));
-            company.setCatchPhrase(JSONUtil.readString(jsonObject,"catchPhrase"));
-            company.setName(JSONUtil.readString(jsonObject,"name"));
-            return company;
-        }
-        return null;
-
     }
 
 }

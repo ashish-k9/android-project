@@ -1,7 +1,5 @@
 package testuser.test.com.testuser.service;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,36 +15,29 @@ import testuser.test.com.testuser.utils.ResponseHandler;
  */
 
 
-
 public class ServiceAsyncTask extends AsyncTask<String, Void, JSONObject> {
 
-    private static final String TAG =  "Service call" ;
-    private ProgressDialog pDialog;
-    Activity  activity;
-    int RESULTKEY,POSITION;
+    private static final String TAG = "Service call";
+    int RESULTKEY, POSITION;
     ResponseHandler responseHandler;
-    public ServiceAsyncTask(Activity activity,int resultKey, int position,ResponseHandler responseHandler){
-    this.activity = activity;
-    this.POSITION = position;
-    this.RESULTKEY = resultKey;
-    this.responseHandler = responseHandler;
+    String url = "";
+
+    public ServiceAsyncTask(int resultKey, int position, ResponseHandler responseHandler) {
+        this.POSITION = position;
+        this.RESULTKEY = resultKey;
+        this.responseHandler = responseHandler;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        // Showing progress dialog
-        pDialog = new ProgressDialog(activity);
-        pDialog.setMessage("Please wait...");
-        pDialog.setCancelable(false);
-        pDialog.show();
 
     }
-    String url = "";
+
     @Override
     protected JSONObject doInBackground(String... params) {
         HttpHandler sh = new HttpHandler();
-         url = params[0];
+        url = params[0];
         // Making a request to url and getting response
         String jsonStr = sh.makeServiceCall(url);
 
@@ -56,9 +47,9 @@ public class ServiceAsyncTask extends AsyncTask<String, Void, JSONObject> {
             try {
                 JSONArray jsonArray = new JSONArray(jsonStr);
                 JSONObject jsonObj = new JSONObject();
-                jsonObj.put("results",jsonArray);
+                jsonObj.put("results", jsonArray);
 
-                return  jsonObj;
+                return jsonObj;
 
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -77,13 +68,10 @@ public class ServiceAsyncTask extends AsyncTask<String, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject result) {
         super.onPostExecute(result);
-        // Dismiss the progress dialog
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-        if(result!= null){
-            responseHandler.onSucess(RESULTKEY,result,url);
-        }else{
-            responseHandler.onFailure(RESULTKEY,POSITION);
+        if (result != null) {
+            responseHandler.onSuccess(RESULTKEY, result, url);
+        } else {
+            responseHandler.onFailure(RESULTKEY, POSITION);
         }
 
     }

@@ -8,15 +8,11 @@ import org.json.JSONObject;
  */
 
 public interface ResponseHandler {
-    int RESULT_KEY_FOR_GET_USERS = 100;
     int RESULT_KEY_FOR_GET_USER_PICTURE = 101;
     int RESULT_KEY_FOR_GET_USER_DETAILS = 102;
     String BASE_URL = "https://jsonplaceholder.typicode.com/";
 
+    void onSuccess(int resultKey, JSONObject jsonObject, String url);
 
-
-    void onSucess(int resultKey, JSONObject jsonObject,String url);
-    void onFailure(int resultKey,int position);
-
-
+    void onFailure(int resultKey, int position);
 }

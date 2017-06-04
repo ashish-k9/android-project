@@ -9,9 +9,25 @@ import testuser.test.com.testuser.utils.JSONUtil;
  * Copyright © 2017 TestUser. All rights reserved.
  */
 
-public class Address{
-    String street,suite,city,zipcode,phone,website;
-    long lat,lang;
+public class Address {
+    String street, suite, city, zipcode, phone, website;
+    long lat, lang;
+
+    public static Address getAddressFromJson(JSONObject jsonObject) {
+        if (jsonObject != null) {
+            Address address = new Address();
+            address.setCity(JSONUtil.readString(jsonObject, "city"));
+            address.setStreet(JSONUtil.readString(jsonObject, "street"));
+            address.setSuite(JSONUtil.readString(jsonObject, "suite"));
+            address.setZipcode(JSONUtil.readString(jsonObject, "zipcode"));
+            JSONObject object = JSONUtil.getJsonObject(jsonObject, "geo");
+            address.setLat(JSONUtil.readlong(object, "lat"));
+            address.setLang(JSONUtil.readlong(object, "lng"));
+            return address;
+
+        }
+        return null;
+    }
 
     public long getLat() {
         return lat;
@@ -75,21 +91,5 @@ public class Address{
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public   static  Address getAddressFromJson(JSONObject jsonObject){
-        if (jsonObject != null ){
-            Address address = new Address();
-            address.setCity(JSONUtil.readString(jsonObject,"city"));
-            address.setStreet(JSONUtil.readString(jsonObject,"street"));
-            address.setSuite(JSONUtil.readString(jsonObject,"suite"));
-            address.setZipcode(JSONUtil.readString(jsonObject,"zipcode"));
-            JSONObject object = JSONUtil.getJsonObject(jsonObject,"geo");
-            address.setLat(JSONUtil.readlong(object,"lat"));
-            address.setLang(JSONUtil.readlong(object,"lng"));
-            return  address;
-
-        }
-        return  null;
     }
 }
